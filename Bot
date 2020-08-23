@@ -1,0 +1,130 @@
+import telebot
+bot = telebot.TeleBot('TOKEN')
+
+keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
+keyboard1.row('Да', 'Нет')
+
+@bot.message_handler(commands=['start'])
+def start_message(message):
+    bot.send_message(message.chat.id, 'Привет, ты написал мне /start, хочешь выучить язык?', reply_markup=keyboard1)
+
+keyboard_glog = telebot.types.ReplyKeyboardMarkup(True, False)
+keyboard_glog.row('1-я', '2-я', '3-я', '4-я')
+
+@bot.message_handler(commands=['sloveso'])
+def start_message(message):
+    bot.send_message(message.chat.id, 'Ты написал мне /sloveso. Выбирай и поехали!', reply_markup=keyboard_glog)
+
+keyboard_tg = telebot.types.ReplyKeyboardMarkup(True, False)
+keyboard_tg.row('Учим слова', 'Переводим')
+
+@bot.message_handler(commands=['TestSloveso'],func=lambda message: True)
+def start_message(message):
+    bot.send_message(message.chat.id, 'Ты написал мне /TestSloveso. Выбирай и поехали!', reply_markup=keyboard_tg)
+
+def get_text_messages_sl(message):
+    bot.send_message(message.chat.id, message.text)
+    if message.text == "Работаю каждый день":
+        bot.send_message(message.from_user.id, "Výborně")
+    else:
+        bot.send_message(message.from_user.id, "Zkusíme to ještě jednou?")
+
+@bot.message_handler(content_types=['text'])
+def get_text_messages(message):
+
+    if message.text == "Да":
+
+        bot.send_message(message.from_user.id,
+                         "Давай научу тебя склонять глаголы - slovesa \n(обрати внимание слово употребляется в Винительном падеже, "
+                         "В И.п окончание у слова будет другое -  slovesO)")
+        bot.send_message(message.from_user.id, "В Чешском языке есть 4 формы глаголов")
+        bot.send_message(message.from_user.id, "Выбери любую и я расскажу как их использовать")
+        bot.send_message(message.from_user.id, "Напиши боту /sloveso и начнем SLOVESO - глагол")
+        bot.send_message(message.from_user.id, "Если хочешь проверить знания, напиши /TestSloveso.")
+
+    elif message.text == '1-я':
+        bot.send_message(message.from_user.id, "К 1й форме относятя глаголы, которые имею окончание - <b>AT</b>."
+                                               "\nNapříklad:\nděl<b>AT</b> - делать\nchov<b>AT</b> - держать",
+                         parse_mode='HTML')
+
+        bot.send_message(message.from_user.id, "Чтобы просклонять слово dělat nebo chovat, \nв 1,2,3 лице ед.ч и мн.ч")
+        bot.send_message(message.from_user.id, "Třeba поменять окончания \n"
+                                               "Ja - děl<b>ÁM</b>\n"
+                                               "Ty - děl<b>ÁŠ</b>\n"
+                                               "On - děl<b>Á</b>\n"
+                                               "My - děl<b>ÁME</b>\n"
+                                               "Vy - děl<b>ÁTE</b>\n"
+                                               "Oni - děl<b>AJÍ</b>\n", parse_mode='HTML')
+
+        bot.send_message(message.from_user.id, "Есть исключение - слово <b>Mít</b> - иметь, окончание другое,"
+                                               "\nно склоняется как 1я форма глагола \n"
+                                               "Ja - <b>MÁM</b>\n"
+                                               "Ty - <b>MÁŠ</b>\n"
+                                               "On - <b>MÁ</b>\n"
+                                               "My - <b>MÁME</b>\n"
+                                               "Vy - <b>MÁTE</b>\n"
+                                               "Oni - <b>MAJÍ</b>\n", parse_mode='HTML')
+
+    elif message.text == '2-я':
+        bot.send_message(message.from_user.id, "К 2й форме относятя глаголы, которые имею окончание - <b>OVAT</b>."
+                                               "\nNapříklad:\nprac<b>OVAT</b> - работать\nstud<b>OVAT</b> - учиться",
+                         parse_mode='HTML')
+        bot.send_message(message.from_user.id, "Чтобы просклонять слово pracovat nebo studovat,\nв 1,2,3 лице ед.ч и мн.ч")
+        bot.send_message(message.from_user.id, "Třeba поменять окончания \n"
+                                               "Ja - prac<b>UJU</b>\n"
+                                               "Ty - prac<b>UJEŠ</b>\n"
+                                               "On - pra<b>UJE</b>\n"
+                                               "My - prac<b>UJEME</b>\n"
+                                               "Vy - prac<b>UJETE</b>\n"
+                                               "Oni - prac<b>UJOU/UJÍ</b>\n", parse_mode='HTML')
+    elif message.text == '3-я':
+        bot.send_message(message.from_user.id, "К 3й форме относятя глаголы, которые имею окончание - <b>\n-ET-, -ĚT-, -IT- </b>."##############################################
+                                               "\nNapříklad:\nsed<b>ĚT</b> - сидеть\nmysl<b>ET</b> - просить\n"
+                                               "pros<b>IT</b> - думать", parse_mode='HTML')
+
+        bot.send_message(message.from_user.id, "Чтобы просклонять слово sedět, myslet a prosit\nв 1,2,3 лице ед.ч и мн.ч")
+        bot.send_message(message.from_user.id, "Třeba поменять окончания \n"
+                                               "Ja - sed<b>ÍM</b>\n"
+                                               "Ty - sed<b>ÍŠ</b>\n"
+                                               "On - sed<b>Í</b>\n"
+                                               "My - sed<b>ÍME</b>\n"
+                                               "Vy - sed<b>ÍTE</b>\n"
+                                               "Oni - sed<b>Í</b>\n", parse_mode='HTML')
+
+        bot.send_message(message.from_user.id, "Есть исключение - слова <b>STÁT</b> - иметь\n<b>SPÁT</b> - спать, окончание другое,"
+                                               "\nно склоняется как 3я форма глагола \n"
+                                               "Ja - <b>SPÍM</b>\n"
+                                               "Ty - <b>STÍŠ</b>\n"
+                                               "On - <b>SPÍ</b>\n"
+                                               "My - <b>SPÍME</b>\n"
+                                               "Vy - <b>SPÍTE</b>\n"
+                                               "Oni - <b>SPÍ</b>\n", parse_mode='HTML')
+    elif message.text == '4-я':
+        bot.send_message(message.from_user.id,
+                         "К 4й форме относятя глаголы исключения. Я дам тебе файл, в нем указаны самые часто используемые\n" 
+                         "Постарайся это выучить.\nСразу все будет тяжело, но если будешь практиковать, все получится!",
+                          parse_mode='HTML')
+        bot.send_message(message.from_user.id, "Пример такого глагола <b>JÍST</b> - есть"
+                                               "Ja - <b>JÍM</b>\n"
+                                               "Ty - <b>JÍŠ</b>\n"
+                                               "On - <b>JÍ</b>\n"
+                                               "My - <b>JÍME</b>\n"
+                                               "Vy - <b>JÍTE</b>\n"
+                                               "Oni - <b>JEDÍ</b>\n", parse_mode='HTML')
+
+        doc = open('Glagoly.xlsx', 'rb')
+        bot.send_document(message.chat.id, doc)
+
+    elif message.text == "Переводим":
+        bot.send_message(message.from_user.id, "Pracuju každý den")
+        bot.register_next_step_handler(message, get_text_messages_sl)
+
+    elif message.text == "/help":
+
+        bot.send_message(message.from_user.id, "Напиши Привет")
+
+    else:
+
+        bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /help.")
+
+bot.polling(none_stop=True, interval=0)
